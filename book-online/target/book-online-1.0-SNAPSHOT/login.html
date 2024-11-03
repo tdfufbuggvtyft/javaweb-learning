@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <style type="text/css">
+        /*iconfont图标，第三方登录用*/
+        @font-face {
+            font-family: 'iconfont';
+            src: url('//at.alicdn.com/t/font_1427254_qm1jfg7xsu.eot');
+            src: url('//at.alicdn.com/t/font_1427254_qm1jfg7xsu.eot?#iefix') format('embedded-opentype'),
+            url('//at.alicdn.com/t/font_1427254_qm1jfg7xsu.woff2') format('woff2'),
+            url('//at.alicdn.com/t/font_1427254_qm1jfg7xsu.woff') format('woff'),
+            url('//at.alicdn.com/t/font_1427254_qm1jfg7xsu.ttf') format('truetype'),
+            url('//at.alicdn.com/t/font_1427254_qm1jfg7xsu.svg#iconfont') format('svg');
+        }
+
+        .iconfont {
+            font-family: "iconfont", serif !important;
+            font-size: 28px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-stroke-width: 0;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            background-size: cover;
+            background-color: rgb(47, 126, 138);
+            background-blend-mode: luminosity;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /*表单外层包裹容器*/
+        .form-wrap {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 450px;
+            height: 300px;
+            margin-left: -225px;
+            margin-top: -150px;
+        }
+
+        .sign-box {
+            width: 70%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .sign-box h3 {
+            flex: 1 1 50%;
+            margin-bottom: 15px;
+            margin-right: 10px;
+            padding-bottom: 5px;
+        }
+
+        .default {
+            color: #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .active {
+            color: rgb(36, 169, 190);
+            border-bottom: 2px solid rgb(36, 169, 190);
+
+        }
+
+        /*登陆表单样式*/
+        .login-box {
+            width: 100%;
+            height: 100%;
+            padding: 10px 5px 5px 10px;
+            background-color: #FFF;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            box-shadow: 2px 5px 10px #aaa;
+            text-align: center;
+        }
+
+        /*表单的每个子元素都是div，设置外边距*/
+        form div {
+            margin: 15px auto 10px auto;
+        }
+
+        /*用户名和密码输入框样式*/
+        .input-box {
+            width: 70%;
+            margin: 0 auto;
+            padding-left: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            background-color: #fff;
+            border: 1px solid #e4e6e5;
+            outline: none;
+            border-radius: 3px;
+            color: #333;
+            font-size: 13px;
+        }
+
+        /*按钮样式*/
+        .btn {
+            margin: 0 auto;
+            padding: 10px 140px;
+            border: none;
+            outline: none;
+            border-radius: 3px;
+            background-color: rgb(36, 169, 190);
+            color: #fff;
+            box-shadow: 2px 5px 10px #aaa;
+            cursor: pointer;
+        }
+
+        /*两条线和第三方登录字样横条区*/
+        .line-box {
+            width: 80%;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /*线条样式*/
+        .line {
+            border-bottom: 1px solid #9b9b9b;
+            flex: 0 0 33%;
+        }
+
+        /*第三方登录文字样式*/
+        .login-3rd {
+            flex: 0 0 30%;
+            color: #9b9b9b;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        /*图标外层包裹区样式*/
+        .icon-box {
+            width: 50%;
+            display: inline-flex;
+            justify-content: center;
+            margin-top: 5px;
+        }
+
+        /*图标样式*/
+        .icon-box i {
+            flex: 0 0 33%;
+        }
+
+        .clickable-header{
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+<div id="top">
+    <a href="/index">
+        <h2>book-online</h2>
+    </a>
+</div>
+<div class="form-wrap">
+    <form action="/login" method="post" class="login-box" id="login-form">
+        <!--登陆注册切换部分-->
+        <div class="sign-box">
+            <h3 class="clickable-header active" onclick=login()>密码登录</h3>
+            <h3 class="clickable-header default " onclick=register()>短信登录/注册</h3>
+        </div>
+        <!--用户登录-->
+        <div>
+            <label>
+                <input type="text" name="account" class="input-box" placeholder="手机号/邮箱">
+            </label>
+        </div>
+        <div>
+            <label>
+                <input type="password" name="password" class="input-box" placeholder="密码">
+            </label>
+        </div>
+        <div>
+            <label>
+                <input type="submit" value="立即登录" class="btn">
+            </label>
+        </div>
+        <div class="line-box">
+            <span class="line"></span>
+            <span class="login-3rd">第三方登录</span>
+            <span class="line"></span>
+        </div>
+    </form>
+    <!--用户注册-->
+    <div id="register-section" style="display: none;">
+        <form action="/register" method="post" class="login-box" id="register-form">
+            <div class="sign-box">
+                <h3 class="clickable-header default" onclick=login()>密码登录</h3>
+                <h3 class="clickable-header active " onclick=register()>短信登录/注册</h3>
+            </div>
+            <div>
+                <label>
+                    <input type="text" name="register-account" class="input-box" placeholder="账号">
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input type="password" name="register-password" class="input-box" placeholder="密码">
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input type="password" name="register-confirm-password" class="input-box" placeholder="确认密码">
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input type="submit" value="立即注册" class="btn">
+                </label>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+<script>
+    function login() {
+        document.getElementById("login-form").style.display = "block";
+        document.getElementById("register-section").style.display = "none";
+    }
+
+    function register() {
+        document.getElementById("login-form").style.display = "none";
+        document.getElementById("register-section").style.display = "block";
+    }
+
+
+
+    // 页面加载完成后执行以下代码
+   /* window.onload = function () {
+        // 获取短信登录/注册的标题元素
+        var smsLoginRegister = document.querySelector('.sign-box h3.default');
+
+        // 给短信登录/注册标题添加点击事件
+        smsLoginRegister.addEventListener('click', function () {
+            // 隐藏登录表单
+            document.getElementById('login-form').style.display = 'none';
+            // 显示注册表单
+            document.getElementById('register-from').style.display = 'block';
+
+            // 切换标题的样式类，以体现当前处于注册模式
+            document.querySelector('.sign-box h3.active').classList.remove('active');
+            document.querySelector('.sign-box h3.default').classList.remove('default');
+            document.querySelector('.sign-box h3:last-child').classList.add('active');
+            document.querySelector('.sign-box h3:first-child').classList.add('default');
+        });
+
+        // 获取注册表单元素
+        var smsregisterForm = document.querySelector('.sign-box h3.active');
+
+        // 给注册表单添加提交事件监听器
+        smsregisterForm.addEventListener("click", function (e) {
+
+            document.getElementById('login-form').style.display = 'block';
+
+            document.getElementById('register-section').style.display = 'none'; // 阻止表单默认提交行为
+
+            document.querySelector('.sign-box h3.active').classList.remove('default');
+            document.querySelector('.sign-box h3.default').classList.remove('active');
+            document.querySelector('.sign-box h3:last-child').classList.add('default');
+            document.querySelector('.sign-box h3:first-child').classList.add('active');
+
+           /!* // 获取注册表单中的各个输入值
+            var registerAccount = document.querySelector('input[name="register-account"]').value;
+            var registerPassword = document.querySelector('input[name="register-password"]').value;
+            var registerConfirmPassword = document.querySelector('input[name="register-confirm-password"]').value;*!/
+
+           /!* // 进行前端验证
+            if (!registerAccount ||!registerPassword ||!registerConfirmPassword) {
+                alert('请填写完整的注册信息');
+                return;
+            }
+
+            if (registerPassword!== registerConfirmPassword) {
+                alert('密码和确认密码不一致');
+                return;
+            }*!/
+
+            // 创建一个FormData对象来存储要发送的数据
+           /!* var formData = new FormData();
+            formData.append('account', registerAccount);
+            formData.append('password', registerPassword);*!/
+
+            // 使用fetch API发送POST请求到后端接口 /regist
+           /!* fetch('/register', {
+                method: 'POST',
+                body: formData
+            })
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                         //throw new Error('网络请求失败');
+                    }
+                })
+                .then(function (data) {
+                    if (data.success) {
+                        alert('注册成功');
+                    } else {
+                        alert('注册失败：' + data.message);
+                    }
+                })
+                .catch(function (error) {
+                    alert('注册过程中出现错误：' + error.message);
+                });*!/
+        });
+    };*/
+</script>
+</body>
+</html>
